@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -31,13 +31,13 @@ const userSchema = new mongoose.Schema({
     created_at: { type: Date },
     updated_at: { type: Date, default: Date.now },
 })
-userSchema.pre('save', async function (next) {
-    if (this.isModified('password')) {
-        this.password = await bcrypt.hash(this.password, 12);
-        this.confirm_password = await bcrypt.hash(this.password, 12);
-    }
-    next();
-})
+// userSchema.pre('save', async function (next) {
+//     if (this.isModified('password')) {
+//         this.password = await bcrypt.hash(this.password, 12);
+//         this.confirm_password = await bcrypt.hash(this.password, 12);
+//     }
+//     next();
+// })
 userSchema.methods.generateAuthToken = async function () {
     try {
         let token = jwt.sign({ _id: this.id }, process.env.SECRET_KEY);

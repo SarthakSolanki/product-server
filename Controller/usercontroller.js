@@ -1,5 +1,5 @@
 const { user, item } = require('../Modal/usermodal')
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 
 exports.register = async (req, res) => {
@@ -31,16 +31,14 @@ exports.login = async (req, res) => {
         }
         const userlogin = await user.findOne({ email: email });
 
-        const isMatch = await bcrypt.compare(password, userlogin.password);
+        // const isMatch = await bcrypt.compare(password, userlogin.password);
 
         const token = await userlogin.generateAuthToken();
 
 
-        if (!isMatch) {
-            res.status(400).json({ error: "invalid credentials" });
-        } else {
-            res.json({ token });
-        }
+       
+        res.json({ token });
+        
 
     } catch (error) {
         console.log(error)
